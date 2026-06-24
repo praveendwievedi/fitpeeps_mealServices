@@ -1,7 +1,7 @@
 package meal_service.services;
 
 import lombok.RequiredArgsConstructor;
-import meal_service.dtos.FoodItems;
+import meal_service.dtos.FoodItem;
 import meal_service.dtos.MealRequest;
 import meal_service.dtos.MealResponse;
 import meal_service.models.Food;
@@ -21,15 +21,15 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class MealService {
     private final MealRepo mealRepo;
-    private final FoodRepo foodRepo;
+    private final FoodService foodService;
 
-    public FoodItems covertToFoodItems(Food foodItems){
-        return  new FoodItems(foodItems.getFoodId(),foodItems.getName(),foodItems.getQuantity(),foodItems.getUnit().toString());
+    public FoodItem covertToFoodItems(Food foodItems){
+        return  new FoodItem(foodItems.getFoodId(),foodItems.getName(),foodItems.getQuantity(),foodItems.getUnit().toString());
     }
 
 
     public MealResponse convertToMealResponse(Meal savedMeal){
-        List<FoodItems> foodItems=savedMeal.getFoodNames()
+        List<FoodItem> foodItems=savedMeal.getFoodNames()
                 .stream()
                 .map(
                         this::covertToFoodItems
@@ -45,8 +45,8 @@ public class MealService {
                 savedMeal.getMealDate()
         );
     }
-    public Food findFood(FoodItems foodItems){
-        return foodRepo.findById(foodItems.foodId()).get();
+    public Food findFood(FoodItem foodItems){
+        return foodService.getFoodDetails(foodItems.foodId()).get();
     }
 
     public void setNutrient(Nutrient nutrient,String name,Double amount,Enum unit){
@@ -65,7 +65,7 @@ public class MealService {
         Double fatsContent=0.0;
         Double carbsContent=0.0;
 
-        for(FoodItems food: request.foodItems()){
+        for(FoodItem food: request.foodItems()){
             Food curFood=findFood(food);
             Double quantity=food.quantity();
             proteinContent+=((quantity/100.0 ) * curFood.getProteinPer100g());
