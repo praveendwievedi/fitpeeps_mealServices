@@ -1,9 +1,6 @@
 package meal_service.dtos;
 
-import meal_service.models.Food;
-
 import java.util.List;
-import java.util.Map;
 
-public record MealRequest(String mealType, List<FoodItems> foodItems, Float mealCalorie) {
+public record MealRequest(String mealType, List<FoodItem> foodItems, Float mealCalorie) {
 }

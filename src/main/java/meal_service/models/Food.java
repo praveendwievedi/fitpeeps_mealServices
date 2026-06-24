@@ -11,16 +11,21 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @RequiredArgsConstructor
-@Embeddable
+//@Embeddable
 public class Food {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long foodId;
-    private Long foodItemId;
+//    private Long foodItemId;
+    private Enum foodType;
     private String name;
-    private Double quantity;
     private Enum unit;
+    private Double energyPer100g;
+    private Double energyPer100ml;
     private Double proteinPer100g;
     private Double fatsPer100g;
     private Double carbsPer100g;
+    private Double proteinPer100ml;
+    private Double fatsPer100ml;
+    private Double carbsPer100ml;
 }
