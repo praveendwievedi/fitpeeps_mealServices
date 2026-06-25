@@ -68,8 +68,7 @@ src
 | Field         | Type   | Description                 |
 | ------------- | ------ | --------------------------- |
 | name          | String | Food Name                   |
-| quantity      | Double | Consumed Quantity           |
-| unit          | String | g, ml, serving, piece, etc. |
+| foodTyepe          | ENUM | Liquid, Soilid |
 | calories      | Double | Calories                    |
 | protein       | Double | Protein (g)                 |
 | carbohydrates | Double | Carbohydrates (g)           |
@@ -87,19 +86,19 @@ Request Body
 
 ```json
 {
-  "userId": 1,
   "mealType": "Lunch",
-  "mealTime": "2026-06-22T13:00:00",
   "foodItems": [
-    {
+     {
+      "foodId":"1",
       "name": "Rice",
       "quantity": 200,
-      "unit": "g"
+      "foodType":"SOILID"
     },
     {
+      "foodId":"100",
       "name": "Chicken Breast",
       "quantity": 150,
-      "unit": "g"
+      "foodType":"SOILID"
     }
   ]
 }
@@ -118,12 +117,14 @@ GET /api/meals/user/{userId}
 ```
 
 ### Update Meal
+This is admin call and it will be authenticated first.
 
 ```http
 PUT /api/meals/{mealId}
 ```
 
 ### Delete Meal
+This is admin call and it will be authenticated first.
 
 ```http
 DELETE /api/meals/{mealId}
@@ -133,22 +134,39 @@ DELETE /api/meals/{mealId}
 
 ```json
 {
-  "id": 1,
+  "mealId": 1,
   "userId": 1,
-  "mealType": "Lunch",
-  "totalCalories": 650,
   "foodItems": [
     {
+      "foodId":"1",
       "name": "Rice",
       "quantity": 200,
-      "unit": "g"
+      "foodType":"SOILID"
     },
     {
+      "foodId":"100",
       "name": "Chicken Breast",
       "quantity": 150,
-      "unit": "g"
+      "foodType":"SOILID"
     }
-  ]
+  ],
+"mealType": "Lunch",
+"mealCalorie": 650,
+"mealMacros":[
+       {
+         "name":"Protein",
+         "amount": 30.0
+       },
+       {
+          "name":"Fats",
+          "amount": 20.0
+       },
+       {
+          "name":"Carbs",
+          "amount": 80.0
+        }
+],
+"mealDate":"2026-06-25"
 }
 ```
 
